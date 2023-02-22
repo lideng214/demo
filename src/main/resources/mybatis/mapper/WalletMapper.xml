@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.lideng214.demo.demo.wallet.mapper.WalletMapper">
+
+    <resultMap id="BaseResultMap" type="top.lideng214.demo.demo.wallet.model.Wallet">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="money" column="money" jdbcType="DECIMAL"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="creater" column="creater" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updater" column="updater" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,money,
+        create_time,creater,update_time,
+        updater
+    </sql>
+
+    <select id="findByUserIdWallet" resultType="top.lideng214.demo.demo.wallet.model.Wallet">
+        select
+        <include refid="Base_Column_List"></include>
+        from wallet where user_id = #{userId}
+    </select>
+</mapper>

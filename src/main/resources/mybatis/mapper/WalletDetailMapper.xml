@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.lideng214.demo.demo.wallet.mapper.WalletDetailMapper">
+
+    <resultMap id="BaseResultMap" type="top.lideng214.demo.demo.wallet.model.WalletDetail">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="walletId" column="wallet_id" jdbcType="BIGINT"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="money" column="money" jdbcType="DECIMAL"/>
+        <result property="oldMoney" column="old_money" jdbcType="DECIMAL"/>
+        <result property="newMoney" column="new_money" jdbcType="DECIMAL"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="creater" column="creater" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updater" column="updater" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,user_id,wallet_id,
+        type,money,old_money,
+        new_money,create_time,creater,
+        update_time,updater
+    </sql>
+
+    <select id="findAllByMap" resultType="top.lideng214.demo.demo.wallet.vo.WalletDetailVO" parameterType="map">
+        select type,money,old_money,
+        new_money,create_time,creater,
+        update_time,updater from wallet_detail
+        <where>
+            <if test="paramMap.userId!=null and paramMap.userId != ''">
+                user_id = #{paramMap.userId}
+            </if>
+            <if test="paramMap.startTime != null and paramMap.startTime != '' and paramMap.endTime != null and paramMap.endTime != ''">
+                and create_time between #{paramMap.startTime} and #{paramMap.endTime}
+            </if>
+            <if test="paramMap.type != null and paramMap.type!=''">
+                and type = #{paramMap.type}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+</mapper>
